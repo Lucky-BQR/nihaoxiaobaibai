@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>四体系合一命盘总览 — 莲莲莲</title>
+<style>
+:root {
+  --bg: #0b0a08;
+  --surface: #161310;
+  --card: #1c1814;
+  --border: #2a2418;
+  --gold: #d4af6e;
+  --gold-bright: #f3d99c;
+  --ink: #e8e0d0;
+  --muted: #8a7e6a;
+  --red: #c44a3c;
+  --green: #6b9a5c;
+  --cyan: #6ee0d6;
+  --purple: #a890ff;
+  --rose: #ff8eb8;
+  --vermilion: #b8341e;
+  --jade: #6db088;
+  --copper: #b8804a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "PingFang SC","Hiragino Sans GB","STSong","Microsoft YaHei",serif;
+  line-height:1.75;
+  min-height:100vh;
+}
+.top {
+  text-align:center;
+  padding:48px 20px 32px;
+  border-bottom:1px solid var(--border);
+}
+.top h1 {
+  font-size:2.2em;
+  color:var(--gold-bright);
+  letter-spacing:0.06em;
+  margin-bottom:6px;
+}
+.top .sub {
+  font-size:0.95em;
+  color:var(--muted);
+  letter-spacing:0.08em;
+}
+.top .meta {
+  margin-top:12px;
+  font-size:0.9em;
+  color:var(--muted);
+}
+.top .meta span {
+  margin:0 10px;
+  padding:3px 12px;
+  border:1px solid var(--border);
+  border-radius:3px;
+}
+.tabs {
+  display:flex;
+  flex-wrap:wrap;
+  gap:0;
+  padding:0 16px;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:10;
+  overflow-x:auto;
+}
+.tab {
+  background:none;
+  border:none;
+  color:var(--muted);
+  padding:12px 16px;
+  font-size:0.88em;
+  cursor:pointer;
+  font-family:inherit;
+  white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:all 0.2s;
+}
+.tab:hover { color:var(--gold); }
+.tab.active {
+  color:var(--gold-bright);
+  border-bottom-color:var(--gold);
+}
+.container {
+  max-width:1100px;
+  margin:0 auto;
+  padding:24px 16px 80px;
+}
+.panel { display:none; }
+.panel.active { display:block; }
+.card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:24px;
+  margin-bottom:20px;
+}
+.card h2 {
+  font-size:1.3em;
+  color:var(--gold);
+  margin-bottom:16px;
+  padding-bottom:10px;
+  border-bottom:1px solid var(--border);
+}
+.card h3 {
+  font-size:1.1em;
+  color:var(--gold-bright);
+  margin-top:20px;
+  margin-bottom:8px;
+}
+.card p, .card li {
+  margin-bottom:10px;
+  font-size:0.95em;
+  color:var(--ink);
+}
+.card ul, .card ol {
+  padding-left:22px;
+  margin-bottom:12px;
+}
+.highlight {
+  background:linear-gradient(135deg, #1a1410 0%, #1c1814 100%);
+  border-left:3px solid var(--gold);
+  padding:16px 20px;
+  margin:16px 0;
+  border-radius:0 6px 6px 0;
+  color:var(--gold-bright);
+  font-size:0.95em;
+}
+.warn {
+  background:#1a1210;
+  border:1px solid var(--red);
+  border-radius:6px;
+  padding:14px 18px;
+  margin-bottom:20px;
+  font-size:0.9em;
+  color:var(--ink);
+}
+.warn strong { color:var(--gold-bright); }
+.table {
+  width:100%;
+  border-collapse:collapse;
+  margin:12px 0;
+  font-size:0.9em;
+}
+.table th {
+  background:var(--surface);
+  color:var(--gold);
+  padding:10px 12px;
+  text-align:left;
+  border-bottom:1px solid var(--border);
+  font-weight:600;
+}
+.table td {
+  padding:9px 12px;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+.table tr:hover td { background:rgba(212,175,110,0.04); }
+.grid { display:grid; gap:16px; }
+.g4 { grid-template-columns:repeat(4,1fr); }
+.g3 { grid-template-columns:repeat(3,1fr); }
+@media (max-width:720px) {
+  .g4 { grid-template-columns:repeat(2,1fr); }
+  .g3 { grid-template-columns:repeat(2,1fr); }
+  .palace-grid { grid-template-columns:repeat(2,1fr) !important; }
+  .top h1 { font-size:1.5em; }
+}
+.bazi-pillar {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:18px 12px;
+  text-align:center;
+}
+.bazi-pillar .gan {
+  font-size:2em;
+  color:var(--gold-bright);
+  font-weight:700;
+}
+.bazi-pillar .zhi {
+  font-size:1.5em;
+  color:var(--ink);
+  margin-top:4px;
+}
+.palace-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.palace {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:12px;
+}
+.palace .phead {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:6px;
+  margin-bottom:8px;
+}
+.palace .pname {
+  font-size:0.95em;
+  font-weight:700;
+  color:var(--gold-bright);
+}
+.palace .gz {
+  font-size:0.8em;
+  color:var(--muted);
+  font-weight:400;
+}
+.palace .star {
+  font-size:0.82em;
+  margin-bottom:3px;
+}
+.palace .star.major { color:var(--cyan); }
+.palace .star.minor { color:var(--muted); }
+.palace .pnote {
+  font-size:0.78em;
+  color:var(--muted);
+  margin-top:6px;
+  padding-top:6px;
+  border-top:1px dotted var(--border);
+}
+.tag {
+  display:inline-block;
+  font-size:0.75em;
+  padding:1px 7px;
+  border-radius:3px;
+  background:rgba(212,175,110,0.15);
+  color:var(--gold);
+  border:1px solid rgba(212,175,110,0.25);
+  margin-right:3px;
+}
+.tag.life {
+  background:rgba(200,74,60,0.2);
+  color:var(--red);
+  border-color:rgba(200,74,60,0.3);
+}
+.tag.lu { background:rgba(212,175,110,0.25); color:var(--gold-bright); border-color:rgba(212,175,110,0.4); }
+.tag.quan { background:rgba(255,142,184,0.2); color:var(--rose); border-color:rgba(255,142,184,0.3); }
+.tag.ke { background:rgba(110,176,136,0.2); color:var(--jade); border-color:rgba(110,176,136,0.3); }
+.tag.ji { background:rgba(138,126,106,0.2); color:var(--muted); border-color:rgba(138,126,106,0.3); }
+.phase { display:inline-block; padding:2px 8px; border-radius:3px; font-size:0.85em; }
+.phase.conj { background:rgba(200,74,60,0.2); color:var(--red); }
+.phase.tri { background:rgba(107,154,92,0.2); color:var(--green); }
+.phase.sext { background:rgba(110,224,214,0.2); color:var(--cyan); }
+.phase.hex { background:rgba(138,126,106,0.2); color:var(--muted); }
+.footer {
+  max-width:1100px;
+  margin:0 auto;
+  padding:20px 16px 60px;
+  text-align:center;
+  font-size:0.85em;
+  color:var(--muted);
+  border-top:1px dashed rgba(200,74,60,0.3);
+}
+.note { font-size:0.85em; color:var(--muted); margin-top:10px; }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>四体系合一命盘总览</h1>
+  <div class="sub">ZIPING BAZI · ZIWEI DOUSHU · WESTERN ASTROLOGY · QIMEN DUNJIA · QIZHENG SIYU</div>
+  <div class="meta">
+    <span>莲莲莲</span><span>坤造</span>
+    <span>1995-06-25 16:00</span><span>甘肃秦安</span>
+    <span>八：乙亥 壬午 丁亥 戊申</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('overview')">总览</button>
+  <button class="tab" onclick="showTab('bazi')">八字</button>
+  <button class="tab" onclick="showTab('ziwei')">紫微斗数</button>
+  <button class="tab" onclick="showTab('western')">西洋星盘</button>
+  <button class="tab" onclick="showTab('qimen')">奇门遁甲</button>
+  <button class="tab" onclick="showTab('qizheng')">七政四余</button>
+  <button class="tab" onclick="showTab('wealth')">💎 财运</button>
+  <button class="tab" onclick="showTab('career')">🏛 事业</button>
+  <button class="tab" onclick="showTab('love')">💕 感情</button>
+  <button class="tab" onclick="showTab('friends')">🤝 朋友众生</button>
+  <button class="tab" onclick="showTab('children')">👶 子女缘</button>
+  <button class="tab" onclick="showTab('spirit')">🧘 精神世界</button>
+  <button class="tab" onclick="showTab('health')">💊 健康</button>
+  <button class="tab" onclick="showTab('timeline')">⏳ 运势时间线</button>
+</div>
+
+<div class="container">
+<div id="overview" class="panel active">
+<div class="card">
+  <h2>四体系共同画像</h2>
+  <div class="highlight">
+    <strong>核心人格：</strong>穿透型思辨者。巨门命宫 + 上升天蝎 + 双子星群 + 命度心宿狐，四体系一致指向「看穿表象、用语言/认知/直觉抵达本质」的出厂配置。
+  </div>
+  <p><strong>八字：</strong>日主丁火生于午月（建禄），月干透壬正官，时干透戊伤官。丁火是灯烛之火，壬水是天河之水——你的人生主线是「在秩序与破坏之间寻找光明的出口」。</p>
+  <p><strong>紫微：</strong>命宫巨门（丙戌），身宫官禄（戊寅），来因宫兄弟（乙酉）。你的自我意识建立在「质疑-说破-照亮」上，事业是你后天最重要的修炼场。</p>
+  <p><strong>星盘：</strong>上升天蝎 10°，MC 狮子 16°，太阳巨蟹 3°，月亮/水星/金星三星齐聚双子 8 宫。人前呈现天蝎式深邃，事业追求狮子式标杆。</p>
+  <p><strong>七政四余：</strong>命度心宿狐，大火之次。心宿古称「大火星」，是全天最亮的红超巨星之一（Antares），主明察秋毫、不容被忽视。</p>
+</div>
+<div class="card">
+  <h2>你最该知道的八件事</h2>
+  <ol>
+    <li><strong>你不是来打工的，你是来「立言/立标杆」的。</strong>MC 狮子 + 天梁权 + 太阳财帛，事业最终形态是「被人看见、被人引用」。</li>
+    <li><strong>感情是必修课，不是选修课。</strong>夫妻宫天机化禄 + 太阴化忌，禄忌同宫 = 极致甜与极致疑的同一个来源。</li>
+    <li><strong>钱财跟着「光」走。</strong>太阳财帛 + 木星入射手 + 八字正偏财都有，财富来自曝光、品牌、表达、被认可。</li>
+    <li><strong>健康最怕「过耗」。</strong>疾厄宫武曲破军 + 火星天马，身体能扛但恢复能力有上限。</li>
+    <li><strong>35-44 岁是财富爆发期。</strong>八字丙戌火库 + 紫微田宅廉贞七杀，双体系指向同一个十年。</li>
+    <li><strong>25-34 岁是精神筑基期。</strong>天梁权福德大限，建立方法论和行业认知，不急功近利。</li>
+    <li><strong>修行的核心是「化暗为明」。</strong>从巨门猜疑、天蝎占有欲、亥亥自刑的反复思虑，走向天梁权智慧、太阳光照、北交转化。</li>
+    <li><strong>平台即人脉。</strong>来因宫在兄弟（紫微科），进入优质团队胜过一切单打独斗。</li>
+  </ol>
+</div>
+<div class="card">
+  <h2>四体系数据速查</h2>
+  <table class="table">
+    <tr><th>体系</th><th>核心数据</th><th>关键定位</th></tr>
+    <tr><td>八字</td><td>乙亥 壬午 丁亥 戊申</td><td>丁火建禄，伤官见官，财官印全</td></tr>
+    <tr><td>紫微</td><td>命宫丙戌巨门 · 身宫戊寅官禄</td><td>巨门思辨 + 官禄立身</td></tr>
+    <tr><td>星盘</td><td>ASC 天蝎 10° · MC 狮子 16°</td><td>上升天蝎 + 事业狮子</td></tr>
+    <tr><td>奇门</td><td>阴遁 6 局 · 值符天芮 · 值使死门</td><td>绝境领导力 + 死而后生</td></tr>
+    <tr><td>七政</td><td>命度心宿狐（大火次）</td><td>明察、中心、不容被附庸</td></tr>
+  </table>
+</div>
+</div>
+<div id="bazi" class="panel"><div class="card"><h2>八字四柱</h2><div class="grid g4">
+    <div class="bazi-pillar">
+      <div class="gan">乙</div>
+      <div class="zhi">亥</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:6px">年柱<br>山头火<br>正印/正官</div>
+    </div>
+    <div class="bazi-pillar">
+      <div class="gan">壬</div>
+      <div class="zhi">午</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:6px">月柱<br>杨柳木<br>正官/比肩</div>
+    </div>
+    <div class="bazi-pillar">
+      <div class="gan">丁</div>
+      <div class="zhi">亥</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:6px">日柱<br>屋上土<br>日主/正官</div>
+    </div>
+    <div class="bazi-pillar">
+      <div class="gan">戊</div>
+      <div class="zhi">申</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:6px">时柱<br>大驿土<br>伤官/正财</div>
+    </div></div>
+<div class="highlight" style="margin-top:16px">
+  <strong>日主丁火</strong>生于午月得禄，年支亥、日支亥双正官贴身，月干壬水正官透出，时干戊土伤官。这是「身强可任财官」的格局，但伤官与正官同透，内心常有「规则 vs 突破」的张力。
+</div></div>
+<div class="card"><h2>八字大运全表</h2>
+<table class="table">
+  <tr><th>大运</th><th>天干十神</th><th>地支藏干</th><th>年份</th><th>年龄</th><th>关键词</th></tr><tr><td>癸未</td><td>七杀</td><td>食神/比肩/偏印</td><td>1999-2008</td><td>5-14</td><td>七杀幼年 · 竞争与启蒙</td></tr><tr><td>甲申</td><td>正印</td><td>正财/正官/伤官</td><td>2009-2018</td><td>15-24</td><td>正印青年 · 学习入场</td></tr><tr><td>乙酉</td><td>偏印</td><td>偏财</td><td>2019-2028</td><td>25-34</td><td>偏印当前 · 沉淀与怀疑</td></tr><tr><td>丙戌</td><td>劫财</td><td>伤官/偏财/比肩</td><td>2029-2038</td><td>35-44</td><td>劫财 · 合伙与资产扩张</td></tr><tr><td>丁亥</td><td>比肩</td><td>正官/正印</td><td>2039-2048</td><td>45-54</td><td>比肩 · 自立门户</td></tr><tr><td>戊子</td><td>伤官</td><td>七杀</td><td>2049-2058</td><td>55-64</td><td>伤官 · 表达变现</td></tr><tr><td>己丑</td><td>食神</td><td>食神/七杀/偏财</td><td>2059-2068</td><td>65-74</td><td>食神 · 享受生活</td></tr><tr><td>庚寅</td><td>正财</td><td>正印/劫财/伤官</td><td>2069-2078</td><td>75-84</td><td>正财 · 稳定回报</td></tr><tr><td>辛卯</td><td>偏财</td><td>偏印</td><td>2079-2088</td><td>85-94</td><td>偏财 · 晚年余晖</td></tr><tr><td>壬辰</td><td>正官</td><td>伤官/偏印/七杀</td><td>2089-2098</td><td>95-104</td><td>正官 · 归序收束</td></tr></table></div>
+<div class="card"><h2>八字刑冲合会解析</h2>
+<p><strong>亥亥自刑（年支/日支）：</strong>年支亥与日支亥相刑，主思虑反复、自我拉扯、容易在「已经想通了」和「再想想」之间循环。解药在寅木（亥寅合木），学习、创作、运动、接触新生事物都能化解这股自刑。</p>
+<p><strong>午亥暗合（月支/年支/日支）：</strong>月支午火与年支亥、日支亥都有暗合。你的内在欲望（午）与外在规则（亥）有隐秘的吸引力，表现为：一边想反叛，一边又需要被规则认可。</p>
+<p><strong>壬丁合木（月干/日干）：</strong>正官与日主合木。你有强烈的「被规范认可」的渴望，容易进入组织、体制、平台，或者与权威人物产生深刻联系。</p>
+<p><strong>戊壬相克（时干/月干）：</strong>伤官克正官。你内心有打破规则的声音，但正官太旺，直接冲突会两败俱伤。策略是「曲线表达」——用伤官的创意去服务正官的目标。</p>
+<p><strong>申亥相害（时支/年支/日支）：</strong>金与水相害，代表沟通中的误会、执行中的损耗。重要合作需要反复确认边界。</p>
+</div></div><div id="ziwei" class="panel"><div class="card"><h2>紫微斗数本命盘（已按截图修正）</h2>
+<div class="warn"><strong>修正说明：</strong>之前脚本输出的顶层「ming/body」字段有误，把命宫标成了官禄宫。本页以十二宫数组数据和你提供的本命盘截图为准，命宫为 <strong>丙戌 巨门</strong>，身宫为 <strong>戊寅 官禄</strong>，来因宫为 <strong>乙酉 兄弟</strong>。</div>
+<div class="palace-grid">
+    <div class="palace">
+      <div class="phead">
+        <span class="pname">田宅宫 <span class="gz">己丑</span></span>
+        <span class="tag">大限</span> 
+      </div>
+      <div class="star major">主：廉贞 · 七杀</div>
+      <div class="star minor">辅：天刑 · 天寿 · 蜚蠊</div>
+      <div class="pnote">35-44岁大限</div>
+    </div>
+    
+    <div class="palace">
+      <div class="phead">
+        <span class="pname">官禄宫 <span class="gz">戊寅</span></span>
+        <span class="tag life">身宫</span> <span class="tag">大限</span> 
+      </div>
+      <div class="star major">主：文昌 · 陀罗</div>
+      <div class="star minor">辅：天贵 · 台辅 · 孤辰</div>
+      <div class="pnote">身宫 · 45-54岁大限</div>
+    </div>
+    
+    <div class="palace">
+      <div class="phead">
+        <span class="pname">交友宫 <span class="gz">己卯</span></span>
+        <span class="tag">大限</span> 
+      </div>
+      <div class="star major">主：禄存 · 地空</div>
+      <div class="star minor">辅：八座 · 龙池 · 天伤</div>
+      <div class="pnote">55-64岁大限</div>
+    </div>
+    
+    <div class="palace">
+      <div class="phead">
+        <span class="pname">迁移宫 <span class="gz">庚辰</span></span>
+        <span class="tag">大限</span> 
+      </div>
+      <div class="star major">主：天同 · 擎羊</div>
+      <div class="star minor">辅：红鸾 · 恩光 · 天官 · 大耗 · 月德</div>
+      <div class="pnote">65-74岁大限</div>
+    </div>
+    
+    <div class="palace">
+      <div class="phead">
+        <span class="pname">疾厄宫 <span class="gz">辛巳</span></span>
+        <span class="tag">大限</span> 
+      </div>
+      <div class="star major">主：武曲 · 破军</div>
+      <div class="star minor">辅：火星 · 天马 · 天使 · 天姚 · 天巫 · 天虚</div>
+      <div class="pnote">75-84岁大限</div>
+    </div>
+    
+    <div class="palace">
+      <div class="phead">
+        <span class="pname">财帛宫 <span class="gz">壬午</span></span>
+        <span class="tag">大限</span> 
+      </div>
+      <div class="star major">主：太阳</div>
+      <div class="star minor">辅：右弼 · 铃星 · 天厨 · 截路 · 阴煞 · 龙德</div>
+      <div class="pnote">85-94岁大限</div>
+    </div>
+    
+    <div class="palace">
+      <div class="phead">
+        <span class="pname">子女宫 <span class="gz">癸未</span></span>
+        <span class="tag">大限</span> 
+      </div>
+      <div class="star major">主：天府</div>
+      <div class="star minor">辅：地劫 · 天月 · 劫空 · 天哭 · 华盖</div>
+      <div class="pnote">95-104岁大限</div>
+    </div>
+    
+    <div class="palace">
+      <div class="phead">
+        <span class="pname">夫妻宫 <span class="gz">甲申</span></span>
+        <span class="tag">大限</span> <span class="tag">四化</span> 
+      </div>
+      <div class="star major">主：天机<span class="tag lu">禄</span> · 太阴<span class="tag ji">忌</span></div>
+      <div class="star minor">辅：左辅 · 天钺 · 天福 · 副旬 · 劫煞 · 天德</div>
+      <div class="pnote">105-114岁大限 · 禄忌同宫</div>
+    </div>
+    
+    <div class="palace">
+      <div class="phead">
+        <span class="pname">兄弟宫 <span class="gz">乙酉</span></span>
+        <span class="tag life">来因宫</span> <span class="tag">大限</span> <span class="tag">四化</span> 
+      </div>
+      <div class="star major">主：紫微<span class="tag ke">科</span> · 贪狼</div>
+      <div class="star minor">辅：天才 · 旬空 · 破碎</div>
+      <div class="pnote">来因宫 · 115-124岁大限</div>
+    </div>
+    
+    <div class="palace">
+      <div class="phead">
+        <span class="pname">命宫 <span class="gz">丙戌</span></span>
+        <span class="tag life">命宫</span> <span class="tag">大限</span> 
+      </div>
+      <div class="star major">主：巨门</div>
+      <div class="star minor">辅：天喜 · 封诰 · 寡宿</div>
+      <div class="pnote">5-14岁大限</div>
+    </div>
+    
+    <div class="palace">
+      <div class="phead">
+        <span class="pname">父母宫 <span class="gz">丁亥</span></span>
+        <span class="tag">大限</span> 
+      </div>
+      <div class="star major">主：天相</div>
+      <div class="star minor">辅：三台 · 凤阁 · 年解</div>
+      <div class="pnote">15-24岁大限</div>
+    </div>
+    
+    <div class="palace">
+      <div class="phead">
+        <span class="pname">福德宫 <span class="gz">戊子</span></span>
+        <span class="tag life">当前大限</span> <span class="tag">四化</span> 
+      </div>
+      <div class="star major">主：天梁<span class="tag quan">权</span></div>
+      <div class="star minor">辅：文曲 · 天魁 · 解神 · 天空 · 咸池</div>
+      <div class="pnote">25-34岁大限 · 当前大限</div>
+    </div>
+    </div></div>
+<div class="card"><h2>紫微十二宫专题解读</h2>
+<h3>命宫 · 丙戌 · 巨门</h3>
+<p>巨门坐命，人生主题是「看见别人看不见的」。你天生对信息、真相、语言、逻辑有强烈敏感度，说话容易一针见血，但也容易因为「说太透」而得罪人。丙戌命宫，丙火为太阳之光，戌为火库——你的思辨不是冰冷的，而是带有热情和使命感的。</p>
+<p><strong>辅星：</strong>天喜增加亲和力和人缘；封诰增强名誉、文书、表彰运；寡宿代表内心深处有孤独面，享受独处，不依赖热闹。</p>
+<h3>身宫 · 戊寅 · 官禄</h3>
+<p>身宫在官禄，说明你的后天成就、社会身份、事业角色是你一生中最重要的修炼场。你不是「活给自己看」的人，你必须通过事业/社会贡献来确认自我价值。官禄宫文昌+陀罗：事业上需要反复打磨、精益求精，适合文案、策划、研究、技术等需要反复推敲的领域。</p>
+<h3>夫妻宫 · 甲申 · 天机（禄）+ 太阴（忌）</h3>
+<p>这是全盘最值得深挖的宫位。天机化禄 + 太阴化忌，<strong>禄忌同宫</strong>：感情中同时存在「被吸引」和「被怀疑」两股能量。你会因为对方的聪明、变化、有趣而心动（天机禄），又会因为对方的情绪、距离、暧昧不清而焦虑（太阴忌）。</p>
+<p>左辅、天钺都是贵人星，意味着伴侣或者婚姻关系中容易有助力。但副旬、劫煞提示：感情里有反复试探、考验、阶段性波折。</p>
+<h3>财帛宫 · 壬午 · 太阳</h3>
+<p>太阳坐财帛，钱财与「光」有关：名声、曝光、公众认可、男性客户/领导、白天的工作。太阳在午宫为旺地，财运先天不差，但花钱也大方，喜欢「体面」和「场面」。右弼、铃星增加偏财和竞争财，适合投资、副业、品牌变现。</p>
+<h3>福德宫 · 戊子 · 天梁（权）</h3>
+<p>当前大限（25-34岁）在福德宫。福德是精神世界、享受方式、隐性福分的宫位。天梁化权在这里，意味着你这几年正在建立一种「精神上的主导权」——不再随波逐流，而是形成自己的价值判断体系。文曲、天魁增加贵人引路和审美能力。</p>
+<h3>田宅宫 · 己丑 · 廉贞七杀</h3>
+<p>35-44岁大限在田宅宫。廉贞七杀是开创型组合，在田宅代表房产、不动产、家庭根基的重大变化。这可能是买房、换城市、组建家庭、或事业办公基地扩张的十年。天刑、天寿、蜚蠊提示：家庭事务中可能有规则争执或长辈健康问题。</p>
+<h3>疾厄宫 · 辛巳 · 武曲破军</h3>
+<p>武曲破军主骨骼、牙齿、呼吸、突发性疾病。火星、天马同宫，提示身体有爆发力但不耐劳，容易因高强度、快节奏、频繁出差而透支。天姚、天虚增加情绪性身体反应（焦虑转躯体化）。</p>
+</div>
+<div class="card"><h2>紫微大限时间线</h2>
+<table class="table">
+  <tr><th>年龄</th><th>宫位</th><th>干支</th><th>主星</th><th>主题</th></tr><tr><td>5-14</td><td>命宫</td><td>丙戌</td><td>巨门</td><td></td></tr><tr><td>15-24</td><td>父母宫</td><td>丁亥</td><td>天相</td><td></td></tr><tr><td>25-34</td><td>福德宫 🔴 当前</td><td>戊子</td><td>天梁</td><td></td></tr><tr><td>35-44</td><td>田宅宫</td><td>己丑</td><td>廉贞·七杀</td><td></td></tr><tr><td>45-54</td><td>官禄宫</td><td>戊寅</td><td>文昌·陀罗</td><td></td></tr><tr><td>55-64</td><td>交友宫</td><td>己卯</td><td>禄存·地空</td><td></td></tr><tr><td>65-74</td><td>迁移宫</td><td>庚辰</td><td>天同·擎羊</td><td></td></tr><tr><td>75-84</td><td>疾厄宫</td><td>辛巳</td><td>武曲·破军</td><td></td></tr><tr><td>85-94</td><td>财帛宫</td><td>壬午</td><td>太阳</td><td></td></tr><tr><td>95-104</td><td>子女宫</td><td>癸未</td><td>天府</td><td></td></tr><tr><td>105-114</td><td>夫妻宫</td><td>甲申</td><td>天机·太阴</td><td></td></tr><tr><td>115-124</td><td>兄弟宫</td><td>乙酉</td><td>紫微·贪狼</td><td></td></tr></table></div></div><div id="western" class="panel"><div class="card"><h2>西洋星盘核心数据</h2><div class="grid g3">
+  <div class="bazi-pillar"><div class="gan">ASC</div><div class="zhi">天蝎 10°</div><div style="font-size:12px;color:var(--muted)">上升星座</div></div>
+  <div class="bazi-pillar"><div class="gan">MC</div><div class="zhi">狮子 16°</div><div style="font-size:12px;color:var(--muted)">中天/事业</div></div>
+  <div class="bazi-pillar"><div class="gan">DESC</div><div class="zhi">金牛 10°</div><div style="font-size:12px;color:var(--muted)">下降/关系</div></div>
+</div></div>
+<div class="card"><h2>十大行星落位</h2><table class="table">
+  <tr><th>行星</th><th>星座</th><th>度数</th><th>宫位</th><th>解读</th></tr><tr><td>太阳</td><td>巨蟹</td><td>巨蟹 3°22.4'</td><td>8宫</td><td>核心自我：情感丰富、重视安全感、容易成为照顾者</td></tr><tr><td>月亮</td><td>双子</td><td>双子 3°58.5'</td><td>7宫</td><td>情绪模式：思维驱动情绪，需要不断学习与交流</td></tr><tr><td>水星</td><td>双子</td><td>双子 12°21.3'</td><td>8宫</td><td>沟通方式：水星入庙，语言表达强，信息处理快</td></tr><tr><td>金星</td><td>双子</td><td>双子 17°54.6'</td><td>8宫</td><td>价值/关系：金星入庙，重视聊得来、精神共鸣</td></tr><tr><td>火星</td><td>处女</td><td>处女 15°20.1'</td><td>11宫</td><td>行动力：火星入庙，执行力强、注重细节、容易焦虑</td></tr><tr><td>木星</td><td>射手</td><td>射手 7°43.1'</td><td>1宫</td><td>扩张/信念：木星入庙，信仰宏大、追求远方与自由</td></tr><tr><td>土星</td><td>双鱼</td><td>双鱼 24°42.3'</td><td>5宫</td><td>压力/功课：土星在双鱼，灵性现实化，但也易逃避</td></tr><tr><td>天王星</td><td>摩羯</td><td>摩羯 29°34.1'</td><td>3宫</td><td>变革：天王星在摩羯，用结构化方式打破传统</td></tr><tr><td>海王星</td><td>摩羯</td><td>摩羯 24°47.6'</td><td>3宫</td><td>梦想/消融：海王星在摩羯，梦想需要落地</td></tr><tr><td>北交点</td><td>天蝎</td><td>天蝎 2°28.8'</td><td>12宫</td><td>灵魂方向：今生学习信任、深度转化、放下控制</td></tr></table></div>
+<div class="card"><h2>关键相位</h2><table class="table">
+  <tr><th>相位</th><th>行星</th><th>容许度</th><th>解读</th></tr><tr><td><span class="phase hex">冲☍</span></td><td>月亮 ☍ 木星</td><td>3.74°</td><td>情绪被扩张/信念放大，容易乐观但判断力波动</td></tr><tr><td><span class="phase tri">拱△</span></td><td>月亮 △ 天王星</td><td>4.41°</td><td></td></tr><tr><td><span class="phase conj">合☌</span></td><td>水星 ☌ 金星</td><td>5.55°</td><td>言辞有魅力，谈判与写作能力强</td></tr><tr><td><span class="phase hex">刑□</span></td><td>水星 □ 火星</td><td>2.98°</td><td>说话快、爱争辩，易因言辞惹冲突</td></tr><tr><td><span class="phase hex">冲☍</span></td><td>水星 ☍ 木星</td><td>4.64°</td><td>思维宏大，好学但易眼高手低</td></tr><tr><td><span class="phase hex">刑□</span></td><td>金星 □ 火星</td><td>2.57°</td><td>感情与欲望结合快，激情与冲动并存</td></tr><tr><td><span class="phase hex">刑□</span></td><td>金星 □ 土星</td><td>6.80°</td><td>感情中有现实压力，学会延迟满足</td></tr><tr><td><span class="phase hex">刑□</span></td><td>火星 □ 木星</td><td>7.62°</td><td>行动扩张力强，有冒险精神，但易过耗</td></tr><tr><td><span class="phase sext">六合⚹</span></td><td>土星 ⚹ 天王星</td><td>4.86°</td><td>传统与创新之间找平衡，改革者张力</td></tr><tr><td><span class="phase sext">六合⚹</span></td><td>土星 ⚹ 海王星</td><td>0.09°</td><td>现实与梦想极近（0.09°），最能落地的梦想家</td></tr><tr><td><span class="phase conj">合☌</span></td><td>天王星 ☌ 海王星</td><td>4.78°</td><td>世代相位，理想主义与社会改革共振</td></tr></table></div>
+<div class="card"><h2>四元素分布</h2><div class="grid g4"><div class="bazi-pillar" style="border:1px solid #c44a3c"><div class="gan" style="color:#c44a3c">火</div><div class="zhi">1 颗</div></div><div class="bazi-pillar" style="border:1px solid #d4af6e"><div class="gan" style="color:#d4af6e">土</div><div class="zhi">3 颗</div></div><div class="bazi-pillar" style="border:1px solid #6ee0d6"><div class="gan" style="color:#6ee0d6">风</div><div class="zhi">3 颗</div></div><div class="bazi-pillar" style="border:1px solid #6890a8"><div class="gan" style="color:#6890a8">水</div><div class="zhi">3 颗</div></div></div><p class="note">火1 土3 风3 水3：水象洞察力、土象稳定性、风象思维力都强，唯独火象行动力偏弱。你需要主动制造「点燃行动」的环境，而不是等热情自然升起。</p></div></div><div id="qimen" class="panel"><div class="card"><h2>奇门遁甲终身局</h2>
+<div class="highlight"><strong>阴遁 6 局 · 值符天芮 · 值使死门</strong><br>
+日干丁，时干戊。阴遁宜退守，值符天芮+死门是「大凶中有大贵」的结构——越是绝境，你越清醒。</div></div>
+<div class="card"><h2>九宫排布</h2><div class="palace-grid">
+  <div class="palace"><div class="phead"><span class="pname">4宫 巽 东南</span></div><div class="star major">神：螣蛇</div><div class="star major">星：天英</div><div class="star major">门：休门</div><div class="star minor">地：庚</div><div class="pnote">小凶 · 变幻，休门吉但被螣蛇缠绕</div></div>
+  <div class="palace"><div class="phead"><span class="pname">9宫 离 南</span></div><div class="star major">神：玄武</div><div class="star major">星：天禽</div><div class="star major">门：开门</div><div class="star minor">地：丁</div><div class="pnote">小吉 · 开门吉，玄武主暗，谨防信息不透明</div></div>
+  <div class="palace"><div class="phead"><span class="pname">2宫 坤 西南</span></div><div class="star major">神：六合</div><div class="star major">星：天柱</div><div class="star major">门：生门</div><div class="star minor">地：壬</div><div class="pnote">小吉 · 生门+六合 = 合作生财</div></div>
+  <div class="palace"><div class="phead"><span class="pname">3宫 震 东</span></div><div class="star major">神：太阴</div><div class="star major">星：天任</div><div class="star major">门：景门</div><div class="star minor">地：辛</div><div class="pnote">吉 · 太阴+天任+景门 = 策划、文案最强方位</div></div>
+  <div class="palace"><div class="phead"><span class="pname">5宫 中</span></div><div class="star minor">地：己</div><div class="star minor">星：天蓬</div><div class="pnote">中宫无门神</div></div>
+  <div class="palace"><div class="phead"><span class="pname">7宫 兑 西</span></div><div class="star major">神：九天</div><div class="star major">星：天冲</div><div class="star major">门：伤门</div><div class="star minor">地：乙</div><div class="pnote">小吉 · 九天+天冲 = 向外突破、远行、开拓</div></div>
+  <div class="palace"><div class="phead"><span class="pname">8宫 艮 东北</span></div><div class="star major">神：九地</div><div class="star major">星：天辅</div><div class="star major">门：杜门</div><div class="star minor">地：丙</div><div class="pnote">吉 · 九地+天辅+杜门 = 学习、修行、暗中蓄力</div></div>
+  <div class="palace"><div class="phead"><span class="pname">1宫 坎 北</span></div><div class="star major">神：白虎</div><div class="star major">星：天心</div><div class="star major">门：惊门</div><div class="star minor">地：癸</div><div class="pnote">小凶 · 惊门+白虎 = 口舌、压力、谨慎沟通</div></div>
+  <div class="palace"><div class="phead"><span class="pname">6宫 乾 西北</span></div><div class="star major">神：值符</div><div class="star major">星：天芮</div><div class="star major">门：死门</div><div class="star minor">地：戊</div><div class="pnote">大凶中藏贵 · 值符临宫 = 贵人能在绝境中救场</div></div>
+</div></div>
+<div class="card"><h2>奇门解读你的人生模式</h2>
+<p><strong>值符天芮 + 值使死门：</strong>你的人生课题常常以「问题」的形式出现。别人看到的是死局，你看到的是转机。你适合处理复杂、混乱、没人愿意碰的麻烦事，因为你在绝境中反而最清醒。</p>
+<p><strong>震3宫景门+太阴：</strong>你的表达、策划、传播能力是最强的吉方。如果做内容、做品牌、做方案，尽量朝东方/木性方向发展。</p>
+<p><strong>坤2宫生门+六合：</strong>合作财、合伙婚姻、资源整合是你的财源入口。但需要六合的和谐，关系中一旦对立，财路就受阻。</p>
+<p><strong>离9宫开门+玄武：</strong>事业有公开机会，但玄武主暗，谨防合同条款、信息差、被隐瞒。重要决策要做尽调。</p>
+</div></div><div id="qizheng" class="panel"><div class="card"><h2>七政四余 · 星宿落位</h2><table class="table"><tr><th>星</th><th>星座</th><th>二十八宿</th><th>十二宫次</th><th>解读</th></tr><tr><td>太阳</td><td>巨蟹</td><td>井宿犴</td><td>鹑首</td><td>井宿犴 · 鹑首：主光明、声名、公共形象，落在巨蟹偏情感表达</td></tr><tr><td>月亮</td><td>双子</td><td>参宿猿</td><td>实沈</td><td>参宿猿 · 实沈：情绪灵活、信息敏感、善变而聪明</td></tr><tr><td>水星</td><td>双子</td><td>井宿犴</td><td>实沈</td><td>井宿犴 · 实沈：水星入庙井宿，思维犀利、表达出众</td></tr><tr><td>金星</td><td>双子</td><td>井宿犴</td><td>实沈</td><td>井宿犴 · 实沈：金星入庙井宿，审美与沟通魅力强</td></tr><tr><td>火星</td><td>处女</td><td>轸宿蚓</td><td>鹑尾</td><td>轸宿蚓 · 鹑尾：火星入轸，执行力落地、重细节、有焦虑倾向</td></tr><tr><td>木星</td><td>射手</td><td>箕宿豹</td><td>析木</td><td>箕宿豹 · 析木：木星入庙，远方、扩张、信仰、贵人运</td></tr><tr><td>土星</td><td>双鱼</td><td>奎宿狼</td><td>娵訾</td><td>奎宿狼 · 娵訾：土星在双鱼，现实与灵性之间的拉扯与整合</td></tr><tr><td>罗睺</td><td>天蝎</td><td>房宿兔</td><td>大火</td><td>房宿兔 · 大火：罗睺天蝎，前世习性偏向控制、深度、暗面</td></tr><tr><td>计都</td><td>金牛</td><td>昴宿鸡</td><td>大梁</td><td>昴宿鸡 · 大梁：计都金牛，需要放下对稳定和占有的执着</td></tr><tr><td>紫炁</td><td>双子</td><td>井宿犴</td><td>实沈</td><td>井宿犴 · 实沈：紫炁入井，有超凡脱俗的灵气与智慧</td></tr><tr><td>月孛</td><td>射手</td><td>斗宿獬</td><td>析木</td><td>斗宿獬 · 析木：月孛在射手，欲望与远方的纠缠</td></tr></table></div>
+<div class="card"><h2>命度 · 心宿狐</h2>
+<div class="highlight">你的命度落在心宿狐，大火之次。心宿古称「大火星」，是东方苍龙的心脏，全天最亮的红超巨星之一（Antares）。</div>
+<p><strong>心宿狐的象意：</strong></p>
+<ul>
+  <li>明察秋毫，能看穿表象和人心</li>
+  <li>中心感强，不适合做附庸，必须成为某个领域的核心</li>
+  <li>情感炽烈，爱恨分明，容易走极端</li>
+  <li>有「帝王之星」的气质，渴望被尊重、被看见</li>
+</ul>
+<p>这与你的紫微命宫巨门、西洋上升天蝎完全呼应——四体系都在说：你是一个「必须站在中心位置看全局」的人。</p>
+</div></div><div id="wealth" class="panel"><div class="card"><h2>财运 · 四体系交叉</h2><table class="table">
+  <tr><th>体系</th><th>财富信号</th><th>解读</th></tr>
+  <tr><td>八字</td><td>时支申中藏庚金正财；月支午中藏己土食神</td><td>正偏财都有，食神生财，财富来自专业技能与表达变现</td></tr>
+  <tr><td>紫微</td><td>财帛宫壬午太阳 + 右弼铃星</td><td>太阳财 = 曝光财、名声财、男性/领导资源；铃星增加偏财波动</td></tr>
+  <tr><td>星盘</td><td>2宫射手座 · 木星入庙射手</td><td>木星守护2宫，财富观宏大，敢冒险，远方/信仰/教育相关</td></tr>
+  <tr><td>奇门</td><td>坤2宫生门+六合</td><td>合作生财、合伙、婚姻带来的资源增长</td></tr>
+  <tr><td>七政</td><td>木星箕宿豹入庙</td><td>先天财福厚重，但需到35岁后真正释放</td></tr>
+</table></div>
+<div class="card"><h2>财富曲线与关键年份</h2>
+<p><strong>5-14岁 癸未：</strong>七杀坐食神，家境一般或父母有压力，但自小懂得竞争。</p>
+<p><strong>15-24岁 甲申：</strong>正印坐财官，求学顺利，有机会进入好平台，但正财弱，存钱不易。</p>
+<p><strong>25-34岁 乙酉（当前）：</strong>偏印坐偏财，偏财运出现，但对投资、理财、副业的判断力还在打磨。2026丙午年劫财见官，财务有波动，宜守不宜激进。</p>
+<p><strong>35-44岁 丙戌：</strong>劫财坐火库，这是财富爆发期。八字丙火帮身，戌中藏辛金偏财，紫微田宅廉贞七杀。这十年是资产、房产、事业根基跃迁的关键期。</p>
+<p><strong>45-54岁 丁亥：</strong>比肩坐官印，事业稳定但收入增长放缓，重在巩固。</p>
+</div>
+<div class="card"><h2>财富建议</h2><ol>
+  <li><strong>你的财在「光」里。</strong>别做隐形人，要让专业能力被看见，名声是财富的放大器。</li>
+  <li><strong>35岁前以积累为主。</strong>当前大运偏印，学习、考证、建立系统比追求短期收益更重要。</li>
+  <li><strong>合作能生财，但要选对合伙人。</strong>坤2宫生门+六合提示合伙有利，但申亥害提示合同条款必须严谨。</li>
+  <li><strong>投资风格偏稳健。</strong>虽然你有冒险冲动（木星射手），但八字伤官见官、紫微铃星在财帛，说明高杠杆容易反噬。</li>
+</ol></div></div><div id="career" class="panel"><div class="card"><h2>事业缘 · 四体系交叉</h2><table class="table">
+  <tr><th>体系</th><th>事业信号</th><th>解读</th></tr>
+  <tr><td>八字</td><td>伤官戊土透时干，正官壬水透月干</td><td>伤官见官 = 创意与规则的博弈，适合在体制内做创新、在外企做变革</td></tr>
+  <tr><td>紫微</td><td>身宫官禄（戊寅）+ 文昌陀罗</td><td>事业是立身之本，适合文案、策划、研究、反复打磨的技术/专业岗</td></tr>
+  <tr><td>星盘</td><td>MC 狮子 16°</td><td>事业追求成为标杆、被仰望、有舞台感</td></tr>
+  <tr><td>奇门</td><td>离9宫开门 + 震3宫景门</td><td>事业宜公开发展，传播/策划是核心能力</td></tr>
+  <tr><td>七政</td><td>火星轸宿，木星箕宿入庙</td><td>执行强、有远见，适合需要细节+视野的岗位</td></tr>
+</table></div>
+<div class="card"><h2>事业节奏</h2>
+<p><strong>25-34岁 福德宫天梁权：</strong>当前阶段不是出大成果的时候，而是建立方法论、贵人关系、行业认知的十年。天梁权的福德大运，适合做导师、顾问、知识型产品。</p>
+<p><strong>35-44岁 田宅宫廉贞七杀：</strong>这十年事业会有一次「换地盘」式的跃迁。廉贞七杀是开创组合，可能换城市、换公司、创业、或承担更大的管理责任。</p>
+<p><strong>45-54岁 官禄宫戊寅：</strong>回到身宫本宫，事业的真正成熟期。文昌陀罗经过二十年打磨，此时专业能力成为护城河。</p>
+</div>
+<div class="card"><h2>适合的方向</h2><ul>
+  <li><strong>内容/传播/策划：</strong>巨门命宫 + 水星金星双子 + 震3宫景门</li>
+  <li><strong>咨询/顾问/教练：</strong>天梁权福德 + 太阳财帛 + 北交天蝎</li>
+  <li><strong>技术/产品/数据分析：</strong>火星处女 + 文昌陀罗 + 巨门逻辑</li>
+  <li><strong>管理/组织变革：</strong>伤官见官 + 紫微兄弟 + 天府子女</li>
+</ul></div></div><div id="love" class="panel"><div class="card"><h2>感情 · 四体系交叉</h2><table class="table">
+  <tr><th>体系</th><th>感情信号</th><th>解读</th></tr>
+  <tr><td>八字</td><td>日坐亥水正官，月干透正官</td><td>择偶标准重责任、稳重、有社会地位</td></tr>
+  <tr><td>紫微</td><td>夫妻宫甲申 · 天机禄 + 太阴忌</td><td>禄忌同宫 = 极甜与极疑共存</td></tr>
+  <tr><td>星盘</td><td>金星双子 8宫，下降金牛</td><td>深度关系需要稳定感，但恋爱初期需要聊得来</td></tr>
+  <tr><td>七政</td><td>罗睺房宿，计都昴宿</td><td>南北交对轴，关系中有前世业力与占有欲</td></tr>
+</table></div>
+<div class="card"><h2>夫妻宫天机禄 + 太阴忌详解</h2>
+<p>这是你的感情核心结构。<strong>天机化禄</strong>代表你被聪明、多变、有谈资的人吸引，恋爱初期充满新鲜感和智力刺激。<strong>太阴化忌</strong>代表你容易因为情感需求没被满足、或者对方态度不够明确而焦虑。</p>
+<p><strong>关键点：</strong>禄和忌在同一个宫位，说明你的「吸引点」和「痛苦点」来自同一类特质。对方越聪明多变，你越没有安全感；对方越稳定可预测，你越觉得无聊。你要找的是「聪明但愿意给你稳定承诺」的人。</p>
+<p><strong>左辅、天钺：</strong>伴侣常能给你带来实际帮助，比如事业资源、人脉、建议。</p>
+<p><strong>副旬、劫煞：</strong>感情中有反复试探、短暂分离、外界干扰。不要把这些当成「不爱了」，而是关系磨合的正常节奏。</p>
+</div>
+<div class="card"><h2>感情建议</h2><ol>
+  <li><strong>别用「猜」来确认爱。</strong>你的巨门+天蝎配置容易把怀疑当敏锐，直接沟通比暗中调查更有效。</li>
+  <li><strong>需要稳定但不沉闷。</strong>下降金牛要求伴侣踏实，但金星双子要求精神上能聊到一块。</li>
+  <li><strong>28-32岁是感情关键期。</strong>当前大限福德宫，精神需求被放大，容易遇到灵魂感强的对象，但也要看落地能力。</li>
+  <li><strong>35岁后感情更稳。</strong>田宅廉贞七杀大限，家庭议题加重，适合建立实体家庭。</li>
+</ol></div></div><div id="friends" class="panel"><div class="card"><h2>朋友与众生缘</h2><table class="table">
+  <tr><th>体系</th><th>人际信号</th><th>解读</th></tr>
+  <tr><td>紫微</td><td>兄弟宫乙酉 · 紫微科 + 贪狼</td><td>来因宫在兄弟，同辈、团队、平台是你一生重要缘起</td></tr>
+  <tr><td>紫微</td><td>交友宫己卯 · 禄存 + 地空</td><td>朋友中有贵人，但也有让你空欢喜的人</td></tr>
+  <tr><td>星盘</td><td>11宫处女 · 木星射手对冲</td><td>朋友圈重质不重量，理想高远但朋友标准高</td></tr>
+  <tr><td>八字</td><td>年支亥、日支亥藏壬甲</td><td>贵人缘藏在暗处，关键时有人帮</td></tr>
+</table></div>
+<div class="card"><h2>人际模式</h2>
+<p><strong>兄弟宫紫微化科：</strong>你容易在团队、同辈、社群中崭露头角。紫微科是「名声之星」，你在朋友圈里有成为意见领袖的潜质。但贪狼在兄弟宫也提示：朋友中可能有酒色财气、暧昧桃花、利益纠葛。</p>
+<p><strong>交友宫禄存+地空：</strong>禄存是稳定的贵人星，但地空是空星。这意味着你认识的人表面上帮不上忙，但长期看可能成为关键资源；或者有些朋友出现时声势很大，最后不了了之。人际策略：保持长期联系，不急于一次性兑现。</p>
+<p><strong>迁移宫天同+擎羊：</strong>对外人缘不错，但擎羊增加竞争感。在社交场合中，你可能给人第一印象温和，但深入接触后会发现你有棱有角。</p>
+</div>
+<div class="card"><h2>人际建议</h2><ol>
+  <li><strong>平台即人脉。</strong>你的来因宫在兄弟，进入优质团队、社群、行业组织比单打独斗更重要。</li>
+  <li><strong>少说多听。</strong>巨门命宫容易一针见血，但朋友关系需要缓冲，不是所有真相都需要当场说破。</li>
+  <li><strong>区分「朋友」和「资源」。</strong>地空在交友宫，提醒你别把每个新认识的人都当贵人，时间会筛选。</li>
+</ol></div></div><div id="children" class="panel"><div class="card"><h2>子女缘</h2><table class="table">
+  <tr><th>体系</th><th>子女信号</th><th>解读</th></tr>
+  <tr><td>紫微</td><td>子女宫癸未 · 天府 + 地劫</td><td>子女稳重有主见，但地劫提示教育过程有波折</td></tr>
+  <tr><td>八字</td><td>时柱戊申伤官坐正财</td><td>子女宫有伤官，孩子有独立思考能力，但管教需讲究方法</td></tr>
+  <tr><td>星盘</td><td>5宫双鱼座</td><td>对子女情感细腻，容易溺爱，需要明确边界</td></tr>
+</table></div>
+<div class="card"><h2>子女宫详解</h2>
+<p><strong>天府在子女宫：</strong>天府是库星、稳定之星。子女个性偏稳重、有守成能力，可能继承你的某些资源或价值观。但天府也主迟，晚育或与孩子年龄差较大都是常见现象。</p>
+<p><strong>地劫 + 天月 + 劫空：</strong>怀孕、育儿过程中可能有些意外或波折，需要提前做好身心准备。华盖提示孩子可能有艺术、灵性、独处倾向。</p>
+<p><strong>天哭：</strong>与子女关系中容易有情感上的牵挂或伤感，你需要学会放手，给孩子独立空间。</p>
+</div>
+<div class="card"><h2>子女建议</h2><ol>
+  <li>顺其自然，不必强求时间表。天府+地劫的结构，越强求越容易受挫。</li>
+  <li>教育方式宜「框架内自由」，给稳定规则但允许独立思考。</li>
+  <li>你与子女的缘分更像「精神传承」，而非传统权威式管教。</li>
+</ol></div></div><div id="spirit" class="panel"><div class="card"><h2>精神世界与修行方向</h2><table class="table">
+  <tr><th>体系</th><th>精神信号</th><th>解读</th></tr>
+  <tr><td>紫微</td><td>福德宫戊子 · 天梁权 + 文曲</td><td>精神世界追求智慧与权威感，喜欢成为他人的精神引导者</td></tr>
+  <tr><td>星盘</td><td>北交天蝎 1 宫</td><td>今生课题：从控制与恐惧走向信任与转化</td></tr>
+  <tr><td>八字</td><td>亥亥自刑 + 午亥暗合</td><td>内在反复，需要借助学习/创作/运动来化解</td></tr>
+  <tr><td>七政</td><td>命度心宿狐</td><td>从自我中心到照亮他人的转化</td></tr>
+  <tr><td>奇门</td><td>艮8宫天辅 + 杜门</td><td>修行宜闭关、学习、暗中蓄力</td></tr>
+</table></div>
+<div class="card"><h2>修行的核心路径：化暗为明</h2>
+<p>你的命盘有几个「暗面」集中点：</p>
+<ul>
+  <li><strong>巨门：</strong>容易看见问题、怀疑、批评</li>
+  <li><strong>上升天蝎：</strong>容易感知危险、控制、不信任</li>
+  <li><strong>亥亥自刑：</strong>容易反复思虑、自我攻击</li>
+  <li><strong>夫妻宫太阴忌：</strong>容易在感情中焦虑</li>
+</ul>
+<p>这些不是缺陷，而是你的修行材料。你的路径是：<strong>疑→辩→悟→照。</strong></p>
+<ol>
+  <li><strong>疑：</strong>巨门的天赋，看见问题</li>
+  <li><strong>辩：</strong>水星双子的能力，把问题想清楚</li>
+  <li><strong>悟：</strong>天梁权福德，形成自己的智慧体系</li>
+  <li><strong>照：</strong>太阳财帛 + 北交天蝎，用照亮他人的方式完成转化</li>
+</ol></div>
+<div class="card"><h2>精神建议</h2><ol>
+  <li><strong>写日记或做输出。</strong>巨门+水星双子需要把头脑里的东西倒出来，否则容易反刍。</li>
+  <li><strong>学一门系统性的学问。</strong>天梁权福德需要「体系」，占星、命理、哲学、心理学都适合。</li>
+  <li><strong>接触木性事物。</strong>寅木是亥亥自刑的解药，森林、运动、学习、创作都能帮助你。</li>
+  <li><strong>练习信任。</strong>北交天蝎1宫的功课，是在最深的恐惧里选择信任。</li>
+</ol></div></div><div id="health" class="panel"><div class="card"><h2>健康 · 四体系交叉</h2><table class="table">
+  <tr><th>体系</th><th>健康信号</th><th>解读</th></tr>
+  <tr><td>紫微</td><td>疾厄宫辛巳 · 武曲破军 + 火星天马</td><td>骨骼、牙齿、呼吸、突发性损伤；不宜过劳</td></tr>
+  <tr><td>八字</td><td>日主丁火，水旺</td><td>水火交战，心肾不交，易失眠、焦虑</td></tr>
+  <tr><td>星盘</td><td>火星处女 11 宫</td><td>神经紧张、消化系统、免疫系统</td></tr>
+  <tr><td>奇门</td><td>值符天芮 + 死门</td><td>健康问题是人生课题之一，需要主动管理</td></tr>
+</table></div>
+<div class="card"><h2>健康风险点</h2>
+<p><strong>武曲破军：</strong>主筋骨、牙齿、呼吸道、外伤。火星+天马增加急性发作、炎症、运动损伤的风险。如果你爱运动，要注意热身和强度控制。</p>
+<p><strong>天姚 + 天虚：</strong>情绪容易影响身体，焦虑、抑郁、失眠等心因性问题可能转化为躯体症状。</p>
+<p><strong>水火交战：</strong>八字中壬水、亥水旺而丁火日主，心肾不交，容易睡眠质量差、思虑过多、上热下寒。</p>
+</div>
+<div class="card"><h2>健康建议</h2><ol>
+  <li><strong>规律作息是刚需。</strong>你的大脑太容易运转，需要固定睡眠时间来强制关机。</li>
+  <li><strong>运动要适度。</strong>火星天马让人停不下来，但武曲破军提示骨骼关节需要保护，推荐瑜伽、游泳、八段锦。</li>
+  <li><strong>关注情绪躯体化。</strong>天姚天虚+水火交战，情绪一堵身体就出问题。建议长期做心理咨询、冥想或写作。</li>
+  <li><strong>定期检查牙齿/骨骼。</strong>武曲破军落疾厄，这类问题容易拖到严重才被发现。</li>
+</ol></div></div><div id="timeline" class="panel"><div class="card"><h2>运势时间线：八字大运 + 紫微大限</h2><table class="table">
+  <tr><th>年龄</th><th>年份</th><th>八字大运</th><th>紫微大限</th><th>主题</th><th>关键年份</th></tr><tr><td>5-14</td><td>1999-2008</td><td>癸未 七杀</td><td>命宫 丙戌 巨门</td><td>自我觉醒，竞争与表达</td><td>2002壬午学习运，2006丙戌伏吟</td></tr><tr><td>15-24</td><td>2009-2018</td><td>甲申 正印</td><td>父母宫 丁亥 天相</td><td>求学、进入平台、受长辈影响</td><td>2010庚寅双合年，2014甲午学业/事业起步</td></tr><tr><td>25-34</td><td>2019-2028</td><td>乙酉 偏印</td><td>福德宫 戊子 天梁</td><td>沉淀、怀疑、建立方法论、精神成长</td><td>2022壬寅解刑年，2026丙午劫财波动，2027丁未合火</td></tr><tr><td>35-44</td><td>2029-2038</td><td>丙戌 劫财</td><td>田宅宫 己丑 廉贞七杀</td><td>资产扩张、事业跃迁、家庭根基</td><td>2030庚戌，2034甲寅大利，2036丙辰</td></tr><tr><td>45-54</td><td>2039-2048</td><td>丁亥 比肩</td><td>官禄宫 戊寅 文昌陀罗</td><td>事业成熟、专业深耕</td><td>2042壬戌，2046丙寅</td></tr><tr><td>55-64</td><td>2049-2058</td><td>戊子 伤官</td><td>交友宫 己卯 禄存地空</td><td>人际变现、输出高峰、退居二线</td><td>2052壬申合作年</td></tr><tr><td>65-74</td><td>2059-2068</td><td>己丑 食神</td><td>迁移宫 庚辰 天同擎羊</td><td>享受生活、外出、子女缘</td><td>2064甲申，2067丁亥</td></tr><tr><td>75-84</td><td>2069-2078</td><td>庚寅 正财</td><td>疾厄宫 辛巳 武曲破军</td><td>健康为主，财富稳定</td><td>2070庚寅，2074甲午</td></tr></table></div>
+<div class="card"><h2>2026 年重点</h2>
+<div class="highlight">2026丙午年，你处于乙酉大运（偏印）+ 福德大限（天梁权）。</div>
+<p><strong>财运：</strong>太阳在流年财帛宫，有正财运和曝光机会，但丙火劫财与月干壬水正官相冲，容易有意外支出或合作分钱。不适合大额投资，适合巩固已有资源。</p>
+<p><strong>事业：</strong>流年四化（丙年）天同禄、天机权、文昌科、廉贞忌。文昌科与官禄宫文昌呼应，有学习、考试、证书、专业提升的机会。</p>
+<p><strong>感情：</strong>流年夫妻宫受廉贞忌影响，关系中容易有控制、争执或旧事重提。沟通是关键。</p>
+<p><strong>健康：</strong>流年疾厄宫受火星冲动，注意炎症、运动损伤、情绪焦躁。</p>
+</div></div></div>
+
+<script>
+function showTab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+</script>
+
+<div class="footer">
+  <p>四体系合一命盘总览 · 八字 · 紫微斗数 · 西洋星盘 · 奇门遁甲 · 七政四余</p>
+  <p style="margin-top:8px;">⚠️ 以上为玄学体系的传统解读与象征推演，仅供参考。本回复由 AI 生成，不构成医疗、法律、财务或投资建议；命理是参考，不是定数。涉及健康、法律、重大财务决策请咨询相应专业人士。</p>
+</div>
+
+</body>
+</html>
